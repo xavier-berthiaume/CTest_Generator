@@ -16,6 +16,7 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
+        testcase.cpp
         testcase.h
         mainwindow.ui
 )

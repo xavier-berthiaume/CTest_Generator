@@ -8,13 +8,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setCentralWidget(ui->menu_tabs);
+    variable_count = ui->variable_spin->value();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 
 void MainWindow::on_generate_button_released()
 {
@@ -33,13 +33,18 @@ void MainWindow::on_generate_button_released()
 
         QString name = base_name;
         name.append("_");
-        name.append(i);
+        name.append(QString::number(i));
 
-        //TestCase test_case = TestCase(name, base_command);
+        // Here we need to generate the correct command based on the variable conditions
+        // QString command = base_command;
+        // For each variable, append what should be the correct string data
+
+        TestCase test_case = TestCase(name, base_command);
+        // Now we want to append this line to the text area on tab 2
+        ui->output_browser->append(test_case.toQString());
 
     }
 }
-
 
 void MainWindow::on_clear_button_released()
 {
@@ -48,6 +53,23 @@ void MainWindow::on_clear_button_released()
     ui->command_line->setText("");
 
     ui->iterations_spin->setValue(1);
-    ui->variable_spin->setValue(1);
+    ui->variable_spin->setValue(0);
+
+    ui->output_browser->setText("");
+}
+
+void MainWindow::on_variable_spin_valueChanged(int arg1)
+{
+
+    // Here the user increased the number of variables
+    if (arg1 > variable_count) {
+
+    // Here the user decreased the number of variables
+    } else {
+
+    }
+
+    variable_count = ui->variable_spin->value();
+
 }
 
