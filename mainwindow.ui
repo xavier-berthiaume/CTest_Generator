@@ -157,7 +157,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="variable_title">
             <property name="font">
              <font>
               <pointsize>20</pointsize>

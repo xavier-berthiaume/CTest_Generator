@@ -15,4 +15,5 @@ QString TestCase::toQString() {
 
     generated_string.append(")");
     return generated_string;
+
 }

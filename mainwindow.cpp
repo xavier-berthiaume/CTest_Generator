@@ -8,14 +8,18 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     this->setCentralWidget(ui->menu_tabs);
     variable_count = ui->variable_spin->value();
+
 }
 
 MainWindow::~MainWindow()
 {
+
     delete ui;
+
 }
 
 void MainWindow::on_generate_button_released()
@@ -49,10 +53,12 @@ void MainWindow::on_generate_button_released()
         ui->output_browser->append(test_case.toQString());
 
     }
+
 }
 
 void MainWindow::on_clear_button_released()
 {
+
     // Reset all fields
     ui->name_line->setText("");
     ui->command_line->setText("");
@@ -61,6 +67,7 @@ void MainWindow::on_clear_button_released()
     ui->variable_spin->setValue(0);
 
     ui->output_browser->setText("");
+
 }
 
 void MainWindow::on_variable_spin_valueChanged(int arg1)
@@ -81,7 +88,9 @@ void MainWindow::on_variable_spin_valueChanged(int arg1)
 
 void MainWindow::on_copy_button_released()
 {
+
     QClipboard *clipboard = QGuiApplication::clipboard();
     clipboard->setText(ui->output_browser->toPlainText());
     // ui->output_browser->copy();
+
 }
