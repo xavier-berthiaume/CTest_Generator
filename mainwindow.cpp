@@ -2,6 +2,8 @@
 #include "./ui_mainwindow.h"
 #include "testcase.h"
 
+#include <QClipboard>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -19,6 +21,9 @@ MainWindow::~MainWindow()
 void MainWindow::on_generate_button_released()
 {
 
+    // Reset the output browser
+    ui->output_browser->setText("");
+
     QString base_name = ui->name_line->text();
     QString base_command = ui->command_line->text();
 
@@ -35,11 +40,11 @@ void MainWindow::on_generate_button_released()
         name.append("_");
         name.append(QString::number(i));
 
-        // Here we need to generate the correct command based on the variable conditions
-        // QString command = base_command;
+        //Here we need to generate the correct command based on the variable conditions
+        QString command = base_command;
         // For each variable, append what should be the correct string data
 
-        TestCase test_case = TestCase(name, base_command);
+        TestCase test_case = TestCase(name, command);
         // Now we want to append this line to the text area on tab 2
         ui->output_browser->append(test_case.toQString());
 
@@ -73,3 +78,10 @@ void MainWindow::on_variable_spin_valueChanged(int arg1)
 
 }
 
+
+void MainWindow::on_copy_button_released()
+{
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    clipboard->setText(ui->output_browser->toPlainText());
+    // ui->output_browser->copy();
+}

@@ -17,7 +17,7 @@ public:
     ~MainWindow();
 
     int variable_count;
-    QStack<VariableDataStructure *> variable_stack;
+    // QStack<VariableDataStructure *> variable_stack;
 
 
 private slots:
@@ -26,6 +26,8 @@ private slots:
     void on_clear_button_released();
 
     void on_variable_spin_valueChanged(int arg1);
+
+    void on_copy_button_released();
 
 private:
     Ui::MainWindow *ui;

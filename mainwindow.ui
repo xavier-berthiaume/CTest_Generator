@@ -174,21 +174,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QScrollArea" name="variable_browser">
-            <property name="widgetResizable">
-             <bool>true</bool>
-            </property>
-            <widget class="QWidget" name="scrollAreaWidgetContents">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>1107</width>
-               <height>492</height>
-              </rect>
-             </property>
-            </widget>
-           </widget>
+           <widget class="QListWidget" name="listWidget"/>
           </item>
          </layout>
         </item>
@@ -228,7 +214,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="copy_button">
           <property name="text">
            <string>Copy to clipboard</string>
           </property>
