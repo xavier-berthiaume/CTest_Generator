@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "variabledetailer.h"
+
 #include <QMainWindow>
 #include <QStack>
 
@@ -17,8 +19,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    int variable_count;
-    // QStack<VariableDataStructure *> variable_stack;
+    QStack<VariableDetailer *> variable_stack;
 
 
 private slots:

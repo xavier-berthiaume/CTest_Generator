@@ -14,10 +14,16 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Gui)
 
 set(PROJECT_SOURCES
         main.cpp
+
         mainwindow.cpp
         mainwindow.h
+
         testcase.cpp
         testcase.h
+
+        variabledetailer.h
+        variabledetailer.cpp
+
         mainwindow.ui
 )
 

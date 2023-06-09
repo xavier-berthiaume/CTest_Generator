@@ -3,6 +3,7 @@
 #include "testcase.h"
 
 #include <QClipboard>
+#include <QStack>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
     this->setCentralWidget(ui->menu_tabs);
-    variable_count = ui->variable_spin->value();
 
 }
 
@@ -73,15 +73,20 @@ void MainWindow::on_clear_button_released()
 void MainWindow::on_variable_spin_valueChanged(int arg1)
 {
 
-    // Here the user increased the number of variables
-    if (arg1 > variable_count) {
+    // Here the number on the spinner is bigger than the number of elements in variable_stack
+    if (arg1 > variable_stack.length()) {
 
-    // Here the user decreased the number of variables
+        while (arg1 > variable_stack.length()) {
+            variable_stack.push(new VariableDetailer());
+        }
+
     } else {
 
-    }
+        while (arg1 < variable_stack.length()) {
+            variable_stack.pop();
+        }
 
-    variable_count = ui->variable_spin->value();
+    }
 
 }
 
@@ -91,6 +96,5 @@ void MainWindow::on_copy_button_released()
 
     QClipboard *clipboard = QGuiApplication::clipboard();
     clipboard->setText(ui->output_browser->toPlainText());
-    // ui->output_browser->copy();
 
 }
