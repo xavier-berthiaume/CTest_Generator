@@ -77,13 +77,22 @@ void MainWindow::on_variable_spin_valueChanged(int arg1)
     if (arg1 > variable_stack.length()) {
 
         while (arg1 > variable_stack.length()) {
-            variable_stack.push(new VariableDetailer());
+            QListWidgetItem *created_item = new QListWidgetItem;
+            variable_stack.push(new VariableDetailer(created_item));
+
+            QString label_name = "Variable " + QString::number(variable_stack.length());
+
+            created_item->setText(label_name);
+
+            ui->listWidget->addItem(created_item);
         }
 
     } else {
 
         while (arg1 < variable_stack.length()) {
             variable_stack.pop();
+
+            ui->listWidget->takeItem(variable_stack.length());
         }
 
     }
