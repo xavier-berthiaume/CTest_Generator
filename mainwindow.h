@@ -31,8 +31,16 @@ private slots:
 
     void on_copy_button_released();
 
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+
+    void updatedVariableType();
+
 private:
+    QWidget *editor;
+
     Ui::MainWindow *ui;
+
+    void createEditor();
 
 };
 #endif // MAINWINDOW_H

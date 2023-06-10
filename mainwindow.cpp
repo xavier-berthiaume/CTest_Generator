@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "testcase.h"
 
+#include <QCheckBox>
 #include <QClipboard>
 #include <QStack>
 
@@ -13,12 +14,59 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setCentralWidget(ui->menu_tabs);
 
+    this->createEditor();
+
 }
 
 MainWindow::~MainWindow()
 {
 
     delete ui;
+
+}
+
+void MainWindow::createEditor() {
+
+    editor = new QWidget;
+    editor->hide();
+    editor->setWindowTitle(tr("Variable Editor"));
+
+    /*
+    QLabel *title_label = new QLabel(editor);
+    title_label->setText("Variable Editor");
+    title_label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+    */
+
+    QLabel *variable_name_label = new QLabel;
+    variable_name_label->setText("Variable Name: ");
+    QLineEdit *variable_name_editor = new QLineEdit;
+
+
+    QLabel *variable_type_label = new QLabel;
+    variable_type_label->setText("Variable Type: ");
+    QComboBox *variable_type_combobox = new QComboBox;
+    variable_type_combobox->addItem("Numeric");
+    variable_type_combobox->addItem("Simple String");
+    variable_type_combobox->addItem("Input String");
+    connect(variable_type_combobox, SIGNAL(currentIndexChanged()), this, SLOT(updatedVariableType()));
+
+    QCheckBox *variable_const_box = new QCheckBox;
+    variable_const_box->setText("Constant value");
+
+    QPushButton *confirm_button = new QPushButton();
+    confirm_button->setText("Confirm");
+
+    // Create the main layout
+    QFormLayout *editor_form = new QFormLayout(editor);
+    editor_form->addRow(variable_name_label, variable_name_editor);
+    editor_form->addRow(variable_type_label, variable_type_combobox);
+    editor_form->addRow(variable_const_box, confirm_button);
+
+}
+
+void MainWindow::updatedVariableType() {
+
+    // Change the editor window to provide better options that match with the variable type
 
 }
 
@@ -82,9 +130,9 @@ void MainWindow::on_variable_spin_valueChanged(int arg1)
 
             QString label_name = "Variable " + QString::number(variable_stack.length());
 
-            created_item->setText(label_name);
+            variable_stack.top()->setLabelName(label_name);
 
-            ui->listWidget->addItem(created_item);
+            ui->listWidget->addItem(variable_stack.top()->getListItem());
         }
 
     } else {
@@ -99,7 +147,6 @@ void MainWindow::on_variable_spin_valueChanged(int arg1)
 
 }
 
-
 void MainWindow::on_copy_button_released()
 {
 
@@ -107,3 +154,12 @@ void MainWindow::on_copy_button_released()
     clipboard->setText(ui->output_browser->toPlainText());
 
 }
+
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+
+    // Open a new window that edits the settings for the given variable
+    editor->show();
+
+}
+
