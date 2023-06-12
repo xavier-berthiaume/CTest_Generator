@@ -31,11 +31,15 @@ void MainWindow::createEditor() {
     editor->hide();
     editor->setWindowTitle(tr("Variable Editor"));
 
-    /*
-    QLabel *title_label = new QLabel(editor);
-    title_label->setText("Variable Editor");
-    title_label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
-    */
+    // Create the main layout
+    QFormLayout *editor_form = new QFormLayout(editor);
+    createGenericEditorHeader(editor_form);
+    createIntegerVariableBody(editor_form);
+    createGenericEditorFooter(editor_form);
+
+}
+
+void MainWindow::createGenericEditorHeader(QFormLayout *editor_form) {
 
     QLabel *variable_name_label = new QLabel;
     variable_name_label->setText("Variable Name: ");
@@ -45,10 +49,17 @@ void MainWindow::createEditor() {
     QLabel *variable_type_label = new QLabel;
     variable_type_label->setText("Variable Type: ");
     QComboBox *variable_type_combobox = new QComboBox;
-    variable_type_combobox->addItem("Numeric");
+    variable_type_combobox->addItem("Integer");
     variable_type_combobox->addItem("Simple String");
     variable_type_combobox->addItem("Input String");
-    connect(variable_type_combobox, SIGNAL(currentIndexChanged()), this, SLOT(updatedVariableType()));
+    connect(variable_type_combobox, SIGNAL(currentIndexChanged(int)), this, SLOT(updatedVariableType(int)));
+
+    editor_form->addRow(variable_name_label, variable_name_editor);
+    editor_form->addRow(variable_type_label, variable_type_combobox);
+
+}
+
+void MainWindow::createGenericEditorFooter(QFormLayout *editor_form) {
 
     QCheckBox *variable_const_box = new QCheckBox;
     variable_const_box->setText("Constant value");
@@ -56,17 +67,82 @@ void MainWindow::createEditor() {
     QPushButton *confirm_button = new QPushButton();
     confirm_button->setText("Confirm");
 
-    // Create the main layout
-    QFormLayout *editor_form = new QFormLayout(editor);
-    editor_form->addRow(variable_name_label, variable_name_editor);
-    editor_form->addRow(variable_type_label, variable_type_combobox);
     editor_form->addRow(variable_const_box, confirm_button);
 
 }
 
-void MainWindow::updatedVariableType() {
+void MainWindow::createIntegerVariableBody(QFormLayout *editor_form) {
+
+    QLabel *integer_start_value_label = new QLabel;
+    integer_start_value_label->setText("Start Value: ");
+    QSpinBox *integer_start_value = new QSpinBox;
+    integer_start_value->setValue(0);
+
+    QLabel *integer_increment_label = new QLabel;
+    integer_increment_label->setText("Increment value: ");
+    QSpinBox *integer_increment = new QSpinBox;
+    integer_increment->setValue(1);
+
+    editor_form->addRow(integer_start_value_label, integer_start_value);
+    editor_form->addRow(integer_increment_label, integer_increment);
+
+}
+
+void MainWindow::createSimpleStringVariableBody(QFormLayout *editor_form) {
+
+    QLabel *simple_string_label = new QLabel;
+    simple_string_label->setText("String value: ");
+    QLineEdit *simple_string = new QLineEdit;
+    simple_string->setText("");
+
+    QLabel *simple_string_increment_label = new QLabel;
+    simple_string_increment_label->setText("Increment value: ");
+    QSpinBox *simple_string_increment = new QSpinBox;
+    simple_string_increment->setValue(1);
+
+    editor_form->addRow(simple_string_label, simple_string);
+    editor_form->addRow(simple_string_increment_label, simple_string_increment);
+
+}
+
+void MainWindow::createInputStringVariableBody(QFormLayout *editor_form) {
+
+
+
+}
+
+void MainWindow::updatedVariableType(int selected_index) {
+
+    QFormLayout *layout = (QFormLayout *)sender()->parent();
 
     // Change the editor window to provide better options that match with the variable type
+
+    // We remove rows until we get the 2 base rows from the header, then add the relevant sections
+    /*
+    while (layout->rowCount() > 2) {
+        layout->removeRow(layout->rowCount()-1);
+    }
+    */
+
+    layout->update();
+
+    switch(selected_index) {
+    case 0: {
+        // Integer
+        createIntegerVariableBody(layout);
+        createGenericEditorFooter(layout);
+    } break;
+    case 1: {
+        // Simple String
+    } break;
+    case 2: {
+        // Input String
+    } break;
+    default: {
+        // Do nothing on default
+    }
+    }
+
 
 }
 

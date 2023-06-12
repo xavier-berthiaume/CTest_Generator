@@ -11,6 +11,8 @@ public:
     TestCase() = default;
     TestCase(QString name_param, QString command_param);
 
+    void addVariable(QString variable_value);
+
     QString toQString();
 
 };

@@ -4,6 +4,13 @@ TestCase::TestCase(QString name_param, QString command_param) : name(name_param)
 
 }
 
+void TestCase::addVariable(QString variable_value) {
+
+    command.append(" ");
+    command.append(variable_value);
+
+}
+
 QString TestCase::toQString() {
 
     QString generated_string = "add_test(NAME ";

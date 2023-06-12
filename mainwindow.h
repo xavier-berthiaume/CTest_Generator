@@ -4,6 +4,7 @@
 #include "variabledetailer.h"
 
 #include <QMainWindow>
+#include <QFormLayout>
 #include <QStack>
 
 QT_BEGIN_NAMESPACE
@@ -33,7 +34,7 @@ private slots:
 
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
-    void updatedVariableType();
+    void updatedVariableType(int selected_index);
 
 private:
     QWidget *editor;
@@ -41,6 +42,16 @@ private:
     Ui::MainWindow *ui;
 
     void createEditor();
+
+    void createGenericEditorHeader(QFormLayout *editor_form);
+
+    void createGenericEditorFooter(QFormLayout *editor_form);
+
+    void createIntegerVariableBody(QFormLayout *editor_form);
+
+    void createSimpleStringVariableBody(QFormLayout *editor_form);
+
+    void createInputStringVariableBody(QFormLayout *editor_form);
 
 };
 #endif // MAINWINDOW_H
